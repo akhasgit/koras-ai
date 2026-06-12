@@ -7,7 +7,13 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY local_app.py .
+COPY main.py config.py ./
+COPY routes/ routes/
+COPY controllers/ controllers/
+COPY services/ services/
+COPY models/ models/
+COPY prompts/ prompts/
+COPY utils/ utils/
 
 ENV PORT=8000
 
