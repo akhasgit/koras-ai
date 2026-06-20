@@ -25,6 +25,7 @@ async def handle_analyze(audio: UploadFile = File(...)) -> AnalyzeResponse:
         try:
             wav_bytes = await asyncio.to_thread(normalize_audio, audio_bytes, audio.filename or "audio")
         except Exception as e:
+            import traceback; traceback.print_exc()
             raise HTTPException(415, f"Could not decode audio: {e}") from e
 
         try:
@@ -33,6 +34,7 @@ async def handle_analyze(audio: UploadFile = File(...)) -> AnalyzeResponse:
                 transcribe(wav_bytes),
             )
         except Exception as e:
+            import traceback; traceback.print_exc()
             raise HTTPException(500, f"Analysis failed: {e}") from e
 
     if len(transcript_data["text"].split()) < MIN_TRANSCRIPT_WORDS:
