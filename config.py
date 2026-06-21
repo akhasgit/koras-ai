@@ -21,6 +21,7 @@ _default_origins = ",".join([
     "https://www.koras.com",
     "https://koras.vercel.app",
     "https://koras-site.vercel.app",
+    "https://koras-web-blue.vercel.app",
 ])
 ALLOWED_ORIGINS = os.environ.get("ALLOWED_ORIGINS", _default_origins).split(",")
 
