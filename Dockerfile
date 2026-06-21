@@ -19,13 +19,11 @@ COPY utils/ utils/
 
 ENV PORT=8000
 
-EXPOSE 8000
+EXPOSE $PORT
 
-# Workers = (2 × cores) + 1 is standard; start with 4 for a 2-core container.
-# --timeout 180 covers worst-case: Whisper (5s) + 2x Claude (8s each) + overhead.
-CMD ["gunicorn", "main:app", \
-     "-k", "uvicorn.workers.UvicornWorker", \
-     "-w", "4", \
-     "--timeout", "180", \
-     "--bind", "0.0.0.0:8000", \
-     "--access-logfile", "-"]
+CMD gunicorn main:app \
+    -k uvicorn.workers.UvicornWorker \
+    -w 4 \
+    --timeout 180 \
+    --bind 0.0.0.0:$PORT \
+    --access-logfile -
