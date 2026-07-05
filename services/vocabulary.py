@@ -47,6 +47,15 @@ VALID_POS = {
     "conjunction", "interjection", "pronoun", "determiner",
 }
 
+_VARIETY_STANDARD = (
+    "Choose useful, natural words the learner is likely to encounter in real speech."
+)
+_VARIETY_UNCOMMON = (
+    "Prefer less common but high-utility words — avoid textbook staples the learner "
+    "likely already knows (e.g. resilient, eloquent, concise). Still keep every word "
+    "at the target CEFR and genuinely useful in conversation."
+)
+
 
 # A small curated pool, deterministically filtered by the learner's CEFR
 # band and the exclude list. Only used when Claude fails entirely.
@@ -241,6 +250,9 @@ async def generate_vocabulary_words(
             goals_json=json.dumps(req.goals or [], ensure_ascii=False),
             weak_areas_json=json.dumps(req.weak_areas or [], ensure_ascii=False),
             exclude_words_json=json.dumps((req.exclude_words or [])[:80], ensure_ascii=False),
+            variety_instruction=(
+                _VARIETY_UNCOMMON if req.prefer_uncommon else _VARIETY_STANDARD
+            ),
         )
     except Exception:
         return fallback
