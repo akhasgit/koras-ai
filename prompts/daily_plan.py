@@ -13,9 +13,9 @@ Important rules:
 - Do not expose sensitive transcripts or recordings.
 - If the learner has little history, encourage a baseline AI Tutor session.
 
-Allowed program_id values (must match exactly): "ai-tutor", "ielts-speaking", "interview-prep".
+Allowed program_id values (must match exactly): "ai-tutor", "ielts-speaking", "interview-prep", "daily-vocabulary".
 Allowed type values: "program_session", "review", "reflection", "streak_save".
-Allowed routes per program: "ai-tutor" → "/ai-tutor", "ielts-speaking" → "/ielts", "interview-prep" → "/interview-prep".
+Allowed routes per program: "ai-tutor" → "/ai-tutor", "ielts-speaking" → "/ielts", "interview-prep" → "/interview-prep", "daily-vocabulary" → "/vocabulary".
 
 Return STRICT JSON only — no markdown, no commentary — matching this schema:
 {{
@@ -26,7 +26,7 @@ Return STRICT JSON only — no markdown, no commentary — matching this schema:
     {{
       "item_id": "string",
       "type": "program_session | review | reflection | streak_save",
-      "program_id": "ai-tutor | ielts-speaking | interview-prep",
+      "program_id": "ai-tutor | ielts-speaking | interview-prep | daily-vocabulary",
       "route": "string",
       "title": "string",
       "reason": "string",
