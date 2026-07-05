@@ -5,11 +5,17 @@ from models.daily_plan import DailyPlanItemModel, GenerateDailyPlanRequest, Gene
 from prompts.daily_plan import DAILY_PLAN_PROMPT
 from utils.text import strip_fences
 
-DAILY_PLAN_ALLOWED_PROGRAMS = {"ai-tutor", "ielts-speaking", "interview-prep"}
+DAILY_PLAN_ALLOWED_PROGRAMS = {
+    "ai-tutor",
+    "ielts-speaking",
+    "interview-prep",
+    "daily-vocabulary",
+}
 DAILY_PLAN_ROUTE_BY_PROGRAM = {
     "ai-tutor": "/ai-tutor",
     "ielts-speaking": "/ielts",
     "interview-prep": "/interview-prep",
+    "daily-vocabulary": "/vocabulary",
 }
 DAILY_PLAN_ALLOWED_TYPES = {"program_session", "review", "reflection", "streak_save"}
 
