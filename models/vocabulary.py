@@ -38,6 +38,10 @@ class GenerateVocabularyRequest(BaseModel):
     weak_areas: List[str] = Field(default_factory=list)
     exclude_words: List[str] = Field(default_factory=list, description="Words to avoid (last ~60 learned).")
     count: int = 5
+    prefer_uncommon: bool = Field(
+        default=False,
+        description="When true, bias toward less common but still useful words at the target CEFR.",
+    )
 
 
 class WordObject(BaseModel):

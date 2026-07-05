@@ -10,6 +10,7 @@ Inputs:
 - Goals: {goals_json}                    (the learner's stated reasons for using Koras)
 - Weak areas: {weak_areas_json}          (skills the learner wants to improve)
 - Words to AVOID (already learned): {exclude_words_json}
+- Variety preference: {variety_instruction}
 
 Selection rules:
 - Each word must be a single English headword (no phrases unless they are common idiomatic compounds — and at most one such compound in the set).
