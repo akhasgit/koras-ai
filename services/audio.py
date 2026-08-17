@@ -98,19 +98,61 @@ async def transcribe(wav_bytes: bytes) -> dict:
         model=WHISPER_MODEL,
         file=audio_file,
         response_format="verbose_json",
-        timestamp_granularities=["word"],
+        timestamp_granularities=["word", "segment"],
+        temperature=0,
     )
+
+    segments_raw = getattr(result, "segments", None) or []
+    segments = []
+    for s in segments_raw:
+        if hasattr(s, "avg_logprob"):
+            segments.append({
+                "avg_logprob": float(getattr(s, "avg_logprob", 0.0) or 0.0),
+                "no_speech_prob": float(getattr(s, "no_speech_prob", 0.0) or 0.0),
+                "start": float(getattr(s, "start", 0.0) or 0.0),
+                "end": float(getattr(s, "end", 0.0) or 0.0),
+            })
+        elif isinstance(s, dict):
+            segments.append({
+                "avg_logprob": float(s.get("avg_logprob") or 0.0),
+                "no_speech_prob": float(s.get("no_speech_prob") or 0.0),
+                "start": float(s.get("start") or 0.0),
+                "end": float(s.get("end") or 0.0),
+            })
+
+    def _segment_for_word(start: float, end: float) -> dict | None:
+        best = None
+        best_overlap = -1.0
+        for seg in segments:
+            overlap = min(end, seg["end"]) - max(start, seg["start"])
+            if overlap > best_overlap:
+                best_overlap = overlap
+                best = seg
+        return best if best is not None and best_overlap >= 0 else None
 
     words_raw = getattr(result, "words", None) or []
     words = []
     for w in words_raw:
         if hasattr(w, "word"):
-            words.append({"word": w.word, "start": float(w.start), "end": float(w.end)})
+            token = w.word
+            start = float(w.start)
+            end = float(w.end)
         else:
-            words.append({"word": w["word"], "start": float(w["start"]), "end": float(w["end"])})
+            token = w["word"]
+            start = float(w["start"])
+            end = float(w["end"])
+        seg = _segment_for_word(start, end)
+        words.append({
+            "word": token,
+            "start": start,
+            "end": end,
+            "avg_logprob": None if seg is None else seg["avg_logprob"],
+            "no_speech_prob": None if seg is None else seg["no_speech_prob"],
+        })
 
     return {
         "text": (result.text or "").strip(),
         "words": words,
         "duration": float(getattr(result, "duration", 0.0) or 0.0),
+        "segments": segments,
     }

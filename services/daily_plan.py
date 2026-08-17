@@ -10,12 +10,14 @@ DAILY_PLAN_ALLOWED_PROGRAMS = {
     "ielts-speaking",
     "interview-prep",
     "daily-vocabulary",
+    "speech-clarity",
 }
 DAILY_PLAN_ROUTE_BY_PROGRAM = {
     "ai-tutor": "/ai-tutor",
     "ielts-speaking": "/ielts",
     "interview-prep": "/interview-prep",
     "daily-vocabulary": "/vocabulary",
+    "speech-clarity": "/programs/speech-clarity",
 }
 DAILY_PLAN_ALLOWED_TYPES = {"program_session", "review", "reflection", "streak_save"}
 

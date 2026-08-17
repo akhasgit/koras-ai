@@ -1,4 +1,4 @@
-from routes import ai_tutor, analyze, daily_plan, health, ielts, interview, listening, reading, vocabulary
+from routes import ai_tutor, analyze, daily_plan, health, ielts, interview, listening, reading, speech_check, speech_clarity, vocabulary
 
 __all__ = [
     "health",
@@ -10,4 +10,6 @@ __all__ = [
     "listening",
     "reading",
     "vocabulary",
+    "speech_clarity",
+    "speech_check",
 ]

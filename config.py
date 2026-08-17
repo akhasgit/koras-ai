@@ -28,6 +28,7 @@ ALLOWED_ORIGINS = os.environ.get("ALLOWED_ORIGINS", _default_origins).split(",")
 ALLOWED_ORIGIN_REGEX: str | None = None
 
 KORAS_INTERNAL_SECRET = os.environ.get("KORAS_INTERNAL_SECRET", "")
+KORAS_PHONE_URL = os.environ.get("KORAS_PHONE_URL", "")
 
 # One connection pool per process
 openai_client = AsyncOpenAI()

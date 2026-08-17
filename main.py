@@ -15,7 +15,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import ALLOWED_ORIGIN_REGEX, ALLOWED_ORIGINS
-from routes import ai_tutor, analyze, daily_plan, health, ielts, interview, listening, reading, vocabulary
+from routes import ai_tutor, analyze, daily_plan, health, ielts, interview, listening, reading, speech_check, speech_clarity, vocabulary
 
 app = FastAPI(title="Koras Backend API", version="1.0.0")
 
@@ -36,3 +36,5 @@ app.include_router(daily_plan.router)
 app.include_router(listening.router)
 app.include_router(reading.router)
 app.include_router(vocabulary.router)
+app.include_router(speech_clarity.router)
+app.include_router(speech_check.router)
